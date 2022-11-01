@@ -1,0 +1,69 @@
+saledix292@aregods.com
+gosot30623@wnpop.com
+prod
+lixipib254@yubua.com
+
+teamview
+gaxeg57934@civikli.com
+
+cd D:\Workspaces\port_ui\projects\lanceheadte\
+git checkout -b release/v0.0.16 origin/release/v0.0.15
+git merge origin/staging
+git push origin release/v0.0.16
+git checkout master
+git pull
+git merge origin/release/v0.0.16
+git push origin master
+
+git branch -D release/v0.0.16
+git checkout staging
+
+update lib-version
+src/staging/lib-version.json?mode=edit&at=staging
+
+git commit --allow-empty -m "trigger build" && git push origin
+
+const a = new BroadcastChannel('usb_5426_128_{B5EB2BBE-E48C-590B-A6BD-FABEE5B72786}_mw');
+a.postMessage({msgName:'uiRequest',msgData : 'uiOfflineReady'});
+
+Root Cause:
+This was the root cause
+Resolution Description:
+This was how it was resolved
+Impact Function:
+This function was impacted
+Impact Device:
+This Device was impacted
+Where is the code change(s):
+Is it in MW/UI/Common/Macro or a combination of components like in MW and Macro.
+Risk Assessment:
+High Risk
+  - some features will be affected by the fix
+  - several components need code changes to fix the issue
+  - huge code change/need new implementation
+Low Risk
+  - specific to the feature
+  - Device/Component specific
+
+***
+
+Root Cause:
+a
+Resolution Description:
+a
+Impact Function:
+None
+Impact Device:
+None
+Where is the code change(s):
+a
+Risk Assessment:
+Low Risk
+
+***
+
+I would like to report:
+Last working day:
+- Fixed 
+Today:
+- Continue with Jira tickets.
