@@ -6,16 +6,28 @@ lixipib254@yubua.com
 teamview
 gaxeg57934@civikli.com
 
-cd D:\Workspaces\port_ui\projects\lanceheadte\
-git checkout -b release/v0.0.16 origin/release/v0.0.15
+git add package-lock.json
+git commit -m "update package-lock"
+git push origin
+git checkout -b release/v0.0.3 origin/release/v0.0.2
 git merge origin/staging
-git push origin release/v0.0.16
+git push origin release/v0.0.3
 git checkout master
 git pull
-git merge origin/release/v0.0.16
+git merge origin/release/v0.0.3
 git push origin master
+git branch -D release/v0.0.3
+git checkout staging
 
-git branch -D release/v0.0.16
+cd D:\Workspaces\port_ui\projects\jugan\
+git checkout -b release/v0.0.14 origin/release/v0.0.13
+git merge origin/staging
+git push origin release/v0.0.14
+git checkout master
+git pull
+git merge origin/release/v0.0.14
+git push origin master
+git branch -D release/v0.0.14
 git checkout staging
 
 update lib-version
@@ -62,7 +74,7 @@ Low Risk
 
 ***
 
-I would like to report:
+Hi Sin Ming, I would like to report:
 Last working day:
 - Fixed 
 Today:

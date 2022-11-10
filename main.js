@@ -25,37 +25,21 @@ const URLS = [
   // { url: '/synapse/audio-visualizer', port: 3009 },
   // { url: '/synapse/lighting-engine', port: 3011 },
 ];
-const HOST = 'https://apps-staging.razer.com';
-const express = require('express');
 const path = require('path');
-const request = require('request');
+const { createProxyMiddleware } = require('http-proxy-middleware');
+const express = require('express');
 const app = express();
-app.use(express.json());
+const HOST = 'https://apps-staging.razer.com';
+
 app.listen(5000, () => console.log('Server started!'));
+
 URLS.forEach(({ url, paths, port }) => {
-  paths
-    ? app.use(url, express.static(path.join(__dirname, ...paths)))
-    : app.get(`${url}*`, (req, res) => {
-        request.get(`http://localhost:${port}${req.url}`).pipe(res);
-        // fetch(`http://127.0.0.1:${port}`).then((actual) => {
-        //   actual.headers.forEach((v, n) => res.setHeader(n, v));
-        //   actual.body.pipeTo(res);
-        // });
-      });
+  app.use(
+    url,
+    paths
+      ? express.static(path.join(__dirname, ...paths))
+      : createProxyMiddleware({ target: `http://127.0.0.1:${port}` })
+  );
 });
 
-app.get('*', (req, res) => {
-  console.log(req.url);
-  request.get(`${HOST}${req.url}`).pipe(res);
-});
-
-app.post('*', (req, res) => {
-  console.log('POST', req.url);
-  request({
-    url: `${HOST}${req.url}`,
-    method: 'POST',
-    headers: { 'content-type': 'application/json' },
-    body: req.body,
-    json: true,
-  }).pipe(res);
-});
+app.use('*', createProxyMiddleware({ target: HOST, changeOrigin: true }));
