@@ -9,25 +9,44 @@ gaxeg57934@civikli.com
 git add package-lock.json
 git commit -m "update package-lock"
 git push origin
-git checkout -b release/v0.0.3 origin/release/v0.0.2
+$old = "origin/release/v0.0.15"
+$new = "release/v0.0.16"
+git checkout -b $new $old
 git merge origin/staging
-git push origin release/v0.0.3
+git push origin $new
 git checkout master
 git pull
-git merge origin/release/v0.0.3
+git merge $new
 git push origin master
-git branch -D release/v0.0.3
+git branch -D $new
 git checkout staging
 
-cd D:\Workspaces\port_ui\projects\jugan\
-git checkout -b release/v0.0.14 origin/release/v0.0.13
+git add lib-version.json
+git commit -m "update lib-version"
+git push origin
+$old = "origin/release/v0.0.15"
+$new = "release/v0.0.16"
+git checkout -b $new $old
 git merge origin/staging
-git push origin release/v0.0.14
+git push origin $new
 git checkout master
 git pull
-git merge origin/release/v0.0.14
+git merge $new
 git push origin master
-git branch -D release/v0.0.14
+git branch -D $new
+git checkout staging
+
+cd D:\Workspaces\port_ui\projects\lanceheadte\
+$old = "origin/release/v0.0.4"
+$new = "release/v0.0.5"
+git checkout -b $new $old
+git merge origin/staging
+git push origin $new
+git checkout master
+git pull
+git merge $new
+git push origin master
+git branch -D $new
 git checkout staging
 
 update lib-version
