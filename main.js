@@ -25,10 +25,6 @@ const URLS = [
   // { url: '/synapse/lighting-engine', port: 3011 },
 ];
 
-const FILES = [
-  // { path: '/synapse/dashboard', name: 'AvailableDevices.json' }
-];
-
 const path = require('path');
 const { createProxyMiddleware } = require('http-proxy-middleware');
 const express = require('express');
@@ -48,6 +44,18 @@ URLS.forEach(({ url, paths, port, pathRewrite }) => {
         })
   );
 });
+
+app.use(
+  '/files/synapse',
+  createProxyMiddleware({
+    target: 'https://razer-apps-assets.s3.amazonaws.com',
+    changeOrigin: true,
+  })
+);
+
+const FILES = [
+  // { path: '/synapse/dashboard', name: 'AvailableDevices.json' }
+];
 
 FILES.forEach(({ path, name }) => {
   app.use(
