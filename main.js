@@ -45,28 +45,37 @@ URLS.forEach(({ url, paths, port, pathRewrite }) => {
   );
 });
 
-app.use(
-  '/files/synapse',
-  createProxyMiddleware({
-    target: 'https://razer-apps-assets.s3.amazonaws.com',
-    changeOrigin: true,
-  })
+const ASSETS_HOST = [
+  { prefix: '/amazon', target: 'https://razer-apps-assets.s3.amazonaws.com' },
+  { prefix: '/razer', target: 'https://app-assets.razer.com' },
+];
+ASSETS_HOST.forEach(({ prefix, target }) =>
+  app.use(
+    `${prefix}/files/synapse`,
+    createProxyMiddleware({
+      target,
+      changeOrigin: true,
+      pathRewrite: {
+        [prefix]: '',
+      },
+    })
+  )
 );
 
 const FILES = [
-  // { path: '/synapse/dashboard', name: 'AvailableDevices.json' }
+  // { path: '/synapse/dashboard/AvailableDevices.json', name: 'dump.json' },
+  // { path: '/synapse/products/131/ui/manifests/manifest-1.0.0.json', name: 'manifest.json' },
 ];
-
-FILES.forEach(({ path, name }) => {
+FILES.forEach(({ path, name }) =>
   app.use(
-    `${path}/${name}`,
+    path,
     createProxyMiddleware({
       target: 'http://127.0.0.1:5000/test/',
       pathRewrite: {
-        [path]: '',
+        [path]: name,
       },
     })
-  );
-});
+  )
+);
 
 app.use('*', createProxyMiddleware({ target: HOST, changeOrigin: true }));

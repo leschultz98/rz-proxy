@@ -1,0 +1,45 @@
+{
+  "resources": [
+    {
+      "resourceName": "DeviceDriver131",
+      "resourceVersion": "0.1.2.0",
+      "url": "https://app-assets.razer.com/files/synapse/devices/131/1.0.0.1/PID0083Drv_v0.1.2.0.exe",
+      "path": "131",
+      "overwriteApp": "",
+      "type": "application/x-msdownload",
+      "size": 2860176,
+      "sha256": "8EFECF77CB673C11A6EB23822BF022ED5D8864B07DD884EB6F35BE22FACC7D4C",
+      "integrity": "sha256-jv7Pd8tnPBGm6yOCK/Ai7V2IZLB92ITrbzW+IvrMfUw=",
+      "noCache": false,
+      "restartRequired": false,
+      "action": {
+        "saveToDisk": {
+          "filePath": "Drivers",
+          "runOnInstall": "/S /LAUNCH"
+        }
+      }
+    },
+    {
+      "resourceName": "DeviceDriver130",
+      "resourceVersion": "0.0.8.0",
+      "url": "https://app-assets.razer.com/files/synapse/devices/131/1.0.0.0/PID0082Drv_v0.0.8.0.exe",
+      "path": "131",
+      "overwriteApp": "",
+      "type": "application/x-msdownload",
+      "size": 2804496,
+      "sha256": "F6222979598B0B1E004E817A88109BC7CC50CE96EF0723A1D8892DDE955A00BC",
+      "integrity": "sha256-9iIpeVmLCx4AToF6iBCbx8xQzpbvByOh2Ikt3pVaALw=",
+      "noCache": false,
+      "restartRequired": false,
+      "action": {
+        "saveToDisk": {
+          "filePath": "Drivers",
+          "runOnInstall": "/S /LAUNCH"
+        }
+      }
+    }
+  ],
+  "jws": {
+    "integrity": "sha256-U41zb1kQjdfvqEq+130MJ4gan2YTWIqw1kMd6iykTiM="
+  }
+}

@@ -9,10 +9,10 @@ gaxeg57934@civikli.com
 git add package-lock.json
 git commit -m "update package-lock"
 git push origin
-$old = "origin/release/v0.0.15"
-$new = "release/v0.0.16"
+$old = "origin/release/v0.0.18"
+$new = "release/v0.0.19"
 git checkout -b $new $old
-git merge origin/staging
+git merge staging
 git push origin $new
 git checkout master
 git pull
@@ -24,10 +24,10 @@ git checkout staging
 git add lib-version.json
 git commit -m "update lib-version"
 git push origin
-$old = "origin/release/v0.0.15"
-$new = "release/v0.0.16"
+$old = "origin/release/v0.0.41"
+$new = "release/v0.0.42"
 git checkout -b $new $old
-git merge origin/staging
+git merge staging
 git push origin $new
 git checkout master
 git pull
@@ -37,10 +37,10 @@ git branch -D $new
 git checkout staging
 
 cd D:\Workspaces\port_ui\projects\lanceheadte\
-$old = "origin/release/v0.0.4"
-$new = "release/v0.0.5"
+$old = "origin/release/v0.0.20"
+$new = "release/v0.0.21"
 git checkout -b $new $old
-git merge origin/staging
+git merge staging
 git push origin $new
 git checkout master
 git pull
@@ -93,8 +93,10 @@ Low Risk
 
 ***
 
+- Pushed 6 devices to pre-prod
+
 Hi Sin Ming, I would like to report:
 Last working day:
-- Fixed 
+- Bluetooth mode for Alma
 Today:
 - Continue with Jira tickets.
