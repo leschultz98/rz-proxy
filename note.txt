@@ -9,10 +9,10 @@ gaxeg57934@civikli.com
 git add package-lock.json
 git commit -m "update package-lock"
 git push origin
-$old = "origin/release/v0.0.18"
-$new = "release/v0.0.19"
+$old = "origin/release/v0.0.41"
+$new = "release/v0.0.42"
 git checkout -b $new $old
-git merge staging
+git merge --no-ff staging
 git push origin $new
 git checkout master
 git pull
@@ -24,10 +24,10 @@ git checkout staging
 git add lib-version.json
 git commit -m "update lib-version"
 git push origin
-$old = "origin/release/v0.0.41"
-$new = "release/v0.0.42"
+$old = "origin/release/v0.0.22"
+$new = "release/v0.0.23"
 git checkout -b $new $old
-git merge staging
+git merge --no-ff staging
 git push origin $new
 git checkout master
 git pull
@@ -36,11 +36,16 @@ git push origin master
 git branch -D $new
 git checkout staging
 
+alma
+avat1refresh
+evelyn
+jugan
+lanceheadte
 cd D:\Workspaces\port_ui\projects\lanceheadte\
-$old = "origin/release/v0.0.20"
-$new = "release/v0.0.21"
+$old = "origin/release/v0.0.26"
+$new = "release/v0.0.27"
 git checkout -b $new $old
-git merge staging
+git merge --no-ff staging
 git push origin $new
 git checkout master
 git pull
@@ -48,6 +53,11 @@ git merge $new
 git push origin master
 git branch -D $new
 git checkout staging
+
+git add lib-version.json
+git commit -m "update lib-version"
+git push origin
+git checkout master && git pull && git merge --no-ff staging && git push origin master && git checkout staging
 
 update lib-version
 src/staging/lib-version.json?mode=edit&at=staging
@@ -97,6 +107,6 @@ Low Risk
 
 Hi Sin Ming, I would like to report:
 Last working day:
-- Bluetooth mode for Alma
+- Fixed 
 Today:
 - Continue with Jira tickets.

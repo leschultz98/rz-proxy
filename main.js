@@ -1,3 +1,4 @@
+const MW_PID = 0;
 const URLS = [
   { url: '/test', paths: ['.'] },
   { url: '/installer', paths: ['..', 'installer-ts', 'build'] },
@@ -14,8 +15,10 @@ const URLS = [
   // { url: '/synapse/gms-proxy', port: 3010 },
   // { url: '/synapse/macro', port: 3009 },
   // { url: '/systray/systrayv2', port: 3007 },
-  // { url: '/synapse/products/154/ui', port: 3000 },
-  // { url: '/synapse/products/154/mw', port: 1154, pathRewrite: true },
+  // { url: '/remote-sync-worker', port: 5555, onlyLocalHost: true },
+  // { url: '/synapse/products/128/ui', port: 3000 },
+  // { url: '/synapse/products/3878/ui', port: 3000 },
+  { url: `/synapse/products/${MW_PID}/mw`, port: 1000 + MW_PID, pathRewrite: true },
 
   // { url: '/chroma-app/dashboard', port: 3001 },
   // { url: '/chroma-app/settings', port: 3002 },
@@ -33,13 +36,13 @@ const HOST = 'https://apps-staging.razer.com';
 
 app.listen(5000, () => console.log('Server started!'));
 
-URLS.forEach(({ url, paths, port, pathRewrite }) => {
+URLS.forEach(({ url, paths, port, pathRewrite, onlyLocalHost }) => {
   app.use(
     url,
     paths
       ? express.static(path.join(__dirname, ...paths))
       : createProxyMiddleware({
-          target: `http://127.0.0.1:${port}`,
+          target: `http://${onlyLocalHost ? 'localhost' : '127.0.0.1'}:${port}`,
           pathRewrite: pathRewrite && { [url]: '' },
         })
   );
@@ -64,7 +67,8 @@ ASSETS_HOST.forEach(({ prefix, target }) =>
 
 const FILES = [
   // { path: '/synapse/dashboard/AvailableDevices.json', name: 'dump.json' },
-  // { path: '/synapse/products/131/ui/manifests/manifest-1.0.0.json', name: 'manifest.json' },
+  // { path: '/synapse/lighting-engine/manifest/DeviceManifest_3878_0.json', name: 'manifest.json' },
+  // { path: '/synapse/lighting-engine/manifest/DeviceManifest_3853_0.json', name: 'DeviceManifest_3853_0.json' },
 ];
 FILES.forEach(({ path, name }) =>
   app.use(
