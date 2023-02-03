@@ -16,7 +16,7 @@ const URLS = [
   // { url: '/synapse/macro', port: 3009 },
   // { url: '/systray/systrayv2', port: 3007 },
   // { url: '/remote-sync-worker', port: 5555, onlyLocalHost: true },
-  // { url: '/synapse/products/128/ui', port: 3000 },
+  // { url: '/synapse/products/99/ui', port: 3000 },
   // { url: '/synapse/products/3878/ui', port: 3000 },
   { url: `/synapse/products/${MW_PID}/mw`, port: 1000 + MW_PID, pathRewrite: true },
 

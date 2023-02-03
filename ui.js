@@ -1,13 +1,14 @@
 const { execSync } = require('child_process');
+const { readFileSync, writeFileSync } = require('fs');
 
-const SAMPLE_PROJECT = { name: 'alma', isNested: true };
 const PROJECTS = [
-  SAMPLE_PROJECT,
-  { name: 'evelyn', isNested: true },
-  { name: 'jugan', isNested: true },
-  { name: 'lanceheadte' },
-  { name: 'lilymini' },
-  { name: 'pipert2refresh' },
+  //
+  // 'port_ui\\projects\\alma',
+  // 'port_ui\\projects\\evelyn',
+  // 'port_ui\\projects\\jugan',
+  // 'port_ui\\projects\\lanceheadte',
+  // 'lilymini',
+  // 'pipert2refresh',
 ];
 
 const BEFORE = ['git checkout staging', 'git pull'];
@@ -22,18 +23,24 @@ const AFTER = [
   'git checkout staging',
 ];
 
-const getPath = (name, isNested) => {
-  return `D:\\Workspaces\\${isNested ? 'port_ui\\projects\\' : ''}${name}`;
-};
+const commonRegex = /(?<=staging.+\s\s\s\s"commit":\s")\w+/;
+const jstestRegex = /(?<=dev.+\s\s\s\s"commit":\s")\w+/;
+const timeRegex = /(?<="time":\s)\d+/g;
 
-for (const { name, isNested } of PROJECTS) {
-  const pwd = getPath(name, isNested);
+const common = 'common';
+const jstest = 'jstest';
+const time = Date.now();
+
+for (const project of PROJECTS) {
+  const pwd = `D:\\Workspaces\\${project}`;
   const cd = `cd ${pwd}`;
-  const copy = `xcopy /y ${getPath(
-    SAMPLE_PROJECT.name,
-    SAMPLE_PROJECT.isNested
-  )}\\lib-version.json ${pwd}\\lib-version.json`;
-  const commands = SAMPLE_PROJECT.name === name ? [cd, AFTER] : [cd, BEFORE, copy, AFTER];
 
-  execSync(commands.flat().join(' && '), { stdio: 'inherit' });
+  execSync([cd, BEFORE].flat().join(' && '), { stdio: 'inherit' });
+
+  const path = `${pwd}\\lib-version.json`;
+  const content = readFileSync(path, 'utf8');
+  const newContent = content.replace(commonRegex, common).replace(jstestRegex, jstest).replace(timeRegex, time);
+  writeFileSync(path, newContent);
+
+  execSync([cd, AFTER].flat().join(' && '), { stdio: 'inherit' });
 }

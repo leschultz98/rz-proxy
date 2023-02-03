@@ -3,12 +3,12 @@ const { readFileSync, writeFileSync } = require('fs');
 
 const PROJECTS = [
   //
-  'alma',
-  'evelyn',
-  'jugan',
-  'lanceheadte',
-  'lilymini',
-  'pipert2refresh',
+  // 'alma',
+  // 'evelyn',
+  // 'jugan',
+  // 'lanceheadte',
+  // 'lilymini',
+  // 'pipert2refresh',
 ];
 
 const BEFORE = ['git checkout staging', 'git pull'];
@@ -23,8 +23,8 @@ const AFTER = [
   'git checkout staging',
 ];
 
-const regex = /git\+ssh:\/\/git@bitbucket\.org\/razersw\/rz-middleware\.git#.+?(?=")/g;
-const replace = 'abc';
+const regex = /(?<=git\+ssh:\/\/git@bitbucket\.org\/razersw\/rz-middleware\.git#)\w+/g;
+const replace = 'commit';
 
 for (const project of PROJECTS) {
   const pwd = `D:\\Workspaces\\${project}_mw`;
@@ -34,7 +34,7 @@ for (const project of PROJECTS) {
 
   const path = `${pwd}\\package-lock.json`;
   const content = readFileSync(path, 'utf8');
-  const newContent = content.replace(regex, `git+ssh://git@bitbucket.org/razersw/rz-middleware.git#${replace}`);
+  const newContent = content.replace(regex, replace);
   writeFileSync(path, newContent);
 
   execSync([cd, AFTER].flat().join(' && '), { stdio: 'inherit' });
