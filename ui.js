@@ -14,7 +14,7 @@ const PROJECTS = [
 const BEFORE = ['git checkout staging', 'git pull'];
 const AFTER = [
   'git add lib-version.json',
-  'git commit -m "update lib-version"',
+  'git commit -m "chore: update lib-version"',
   'git push origin',
   'git checkout master',
   'git pull',

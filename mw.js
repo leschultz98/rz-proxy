@@ -14,7 +14,7 @@ const PROJECTS = [
 const BEFORE = ['git checkout staging', 'git pull'];
 const AFTER = [
   'git add package-lock.json',
-  'git commit -m "update package-lock"',
+  'git commit -m "chore: update package-lock"',
   'git push origin',
   'git checkout master',
   'git pull',
@@ -23,8 +23,8 @@ const AFTER = [
   'git checkout staging',
 ];
 
-const regex = /(?<=git\+ssh:\/\/git@bitbucket\.org\/razersw\/rz-middleware\.git#)\w+/g;
-const replace = 'commit';
+const regex = /(?<=git\+ssh:\/\/git@bitbucket\.org\/razersw\/rz-middleware(-audio)?\.git#)\w+/g;
+const replace = 'b7672c58023ec1abba4bb8e46e8fc534703c6897';
 
 for (const project of PROJECTS) {
   const pwd = `D:\\Workspaces\\${project}_mw`;

@@ -67,6 +67,8 @@ git commit --allow-empty -m "trigger build" && git push origin
 const a = new BroadcastChannel('usb_5426_128_{B5EB2BBE-E48C-590B-A6BD-FABEE5B72786}_mw');
 a.postMessage({msgName:'uiRequest',msgData : 'uiOfflineReady'});
 
+New-Item -ItemType SymbolicLink -Path D:\Workspaces\hyperflux_mw\node_modules -Target D:\Workspaces\port_mw\node_modules\
+
 Root Cause:
 This was the root cause
 Resolution Description:
