@@ -3,18 +3,33 @@ const { readFileSync, writeFileSync } = require('fs');
 
 const PROJECTS = [
   //
-  // { name: 'port_ui\\projects\\alma', num: 4 },
-  // { name: 'port_ui\\projects\\evelyn', num: 25 },
-  // { name: 'port_ui\\projects\\jugan', num: 25 },
-  // { name: 'port_ui\\projects\\lanceheadte', num: 4 },
-  // { name: 'port_ui\\projects\\reagan', num: 4 },
-  // { name: 'C:\\Users\\phuc.le\\WebstormProjects\\audio-visualizer', num: 40 },
-  // { name: 'lilywireless', num: 25 },
+  // 'port_ui\\projects\\alma',
+  // 'port_ui\\projects\\evelyn',
+  // 'port_ui\\projects\\jugan',
+  // 'port_ui\\projects\\lanceheadte',
+  // 'port_ui\\projects\\reagan',
+  // 'lilymini',
+  // 'pipert2refresh',
+  // 'C:\\Users\\phuc.le\\WebstormProjects\\audio-visualizer',
 ];
 
 const BEFORE = ['git checkout staging', 'git pull'];
 
-const getAfterScripts = (num) => {
+const getPath = (name) => {
+  if (name.includes('C:\\')) return name;
+  return `D:\\Workspaces\\${name}`;
+};
+
+const getAfterScripts = (cwd) => {
+  const output = execSync('git branch -r', { cwd });
+  const num = Math.max(
+    ...output
+      .toString()
+      .split('\n')
+      .filter((v) => v.includes('origin/release/v0.0.'))
+      .map((v) => parseInt(v.replace('origin/release/v0.0.', '').trim()))
+  );
+
   const newV = `release/v0.0.${num + 1}`;
 
   return [
@@ -33,24 +48,23 @@ const getAfterScripts = (num) => {
   ];
 };
 
-const commonRegex = /(?<=staging.+\s\s\s\s"commit":\s")\w+/;
-const jstestRegex = /(?<=dev.+\s\s\s\s"commit":\s")\w+/;
+const commonRegex = /(?<=staging.+\s+"commit":\s")\w+/;
+const jstestRegex = /(?<=dev.+\s+"commit":\s")\w+/;
 const timeRegex = /(?<="time":\s)\d+/g;
 
 const common = '717646999a2d3d18cb17535281c99e183bf99284';
 const jstest = '7c7613356bedf69f35796e75cffb0f0642fcce35';
 const time = Date.now();
 
-for (const { name, num } of PROJECTS) {
-  const cd = `cd D:\\Workspaces && cd ${name}`;
+for (const name of PROJECTS) {
+  const cwd = getPath(name);
+  execSync(BEFORE.join(' && '), { stdio: 'inherit', cwd });
 
-  execSync([cd, BEFORE].flat().join(' && '), { stdio: 'inherit' });
-
-  const path = `${pwd}\\lib-version.json`;
+  const path = `${cwd}\\lib-version.json`;
   const content = readFileSync(path, 'utf8');
   const newContent = content.replace(commonRegex, common).replace(jstestRegex, jstest).replace(timeRegex, time);
   writeFileSync(path, newContent);
 
-  const after = getAfterScripts(num);
-  execSync([cd, after].flat().join(' && '), { stdio: 'inherit' });
+  const after = getAfterScripts(cwd);
+  execSync(after.join(' && '), { stdio: 'inherit', cwd });
 }
