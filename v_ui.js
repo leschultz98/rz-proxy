@@ -3,25 +3,16 @@ const { readFileSync, writeFileSync } = require('fs');
 
 const PROJECTS = [
   //
-  { name: 'port_ui\\projects\\alma', num: 4 },
-  { name: 'port_ui\\projects\\evelyn', num: 25 },
-  { name: 'port_ui\\projects\\jugan', num: 25 },
+  // { name: 'port_ui\\projects\\alma', num: 4 },
+  // { name: 'port_ui\\projects\\evelyn', num: 25 },
+  // { name: 'port_ui\\projects\\jugan', num: 25 },
   // { name: 'port_ui\\projects\\lanceheadte', num: 4 },
-  { name: 'port_ui\\projects\\reagan', num: 4 },
+  // { name: 'port_ui\\projects\\reagan', num: 4 },
+  // { name: 'C:\\Users\\phuc.le\\WebstormProjects\\audio-visualizer', num: 40 },
   // { name: 'lilywireless', num: 25 },
 ];
 
 const BEFORE = ['git checkout staging', 'git pull'];
-const AFTER = [
-  'git add lib-version.json',
-  'git commit -m "chore: update lib-version"',
-  'git push origin',
-  'git checkout master',
-  'git pull',
-  'git merge --no-ff staging',
-  'git push origin master',
-  'git checkout staging',
-];
 
 const getAfterScripts = (num) => {
   const newV = `release/v0.0.${num + 1}`;
@@ -51,8 +42,7 @@ const jstest = '7c7613356bedf69f35796e75cffb0f0642fcce35';
 const time = Date.now();
 
 for (const { name, num } of PROJECTS) {
-  const pwd = `D:\\Workspaces\\${name}`;
-  const cd = `cd ${pwd}`;
+  const cd = `cd D:\\Workspaces && cd ${name}`;
 
   execSync([cd, BEFORE].flat().join(' && '), { stdio: 'inherit' });
 

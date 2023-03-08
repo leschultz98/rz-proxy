@@ -6,6 +6,7 @@ const PROJECTS = [
   // 'evelyn',
   // 'jugan',
   // 'lanceheadte',
+  // 'reagan',
   // 'lilymini',
   // 'pipert2refresh',
   // 'port_ui\\projects\\reagan',
@@ -16,11 +17,11 @@ const SCRIPTS = [
   'git pull',
   'git commit --allow-empty -m "trigger build"',
   'git push origin',
-  // 'git checkout master',
-  // 'git pull',
-  // 'git commit --allow-empty -m "trigger build"',
-  // 'git push origin master',
-  // 'git checkout staging',
+  'git checkout master',
+  'git pull',
+  'git commit --allow-empty -m "trigger build"',
+  'git push origin master',
+  'git checkout staging',
 ];
 
 for (const project of PROJECTS) {

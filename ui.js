@@ -7,6 +7,7 @@ const PROJECTS = [
   // 'port_ui\\projects\\evelyn',
   // 'port_ui\\projects\\jugan',
   // 'port_ui\\projects\\lanceheadte',
+  // 'port_ui\\projects\\reagan',
   // 'lilymini',
   // 'pipert2refresh',
 ];
@@ -23,12 +24,12 @@ const AFTER = [
   'git checkout staging',
 ];
 
-const commonRegex = /(?<=staging.+\s\s\s\s"commit":\s")\w+/;
-const jstestRegex = /(?<=dev.+\s\s\s\s"commit":\s")\w+/;
+const commonRegex = /(?<=staging.+\s+"commit":\s")\w+/;
+const jstestRegex = /(?<=dev.+\s+"commit":\s")\w+/;
 const timeRegex = /(?<="time":\s)\d+/g;
 
-const common = 'common';
-const jstest = 'jstest';
+const common = 'c70bc92d0be0ff018034c5c67cf3490f343dd8a9';
+const jstest = '661533c89088e3b222b7475e183fe461c8bdb259';
 const time = Date.now();
 
 for (const project of PROJECTS) {
