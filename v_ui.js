@@ -22,7 +22,7 @@ const getPath = (name) => {
 
 const getAfterScripts = (cwd) => {
   const output = execSync('git branch -r', { cwd });
-  const num = Math.max(
+  let num = Math.max(
     ...output
       .toString()
       .split('\n')
@@ -30,13 +30,15 @@ const getAfterScripts = (cwd) => {
       .map((v) => parseInt(v.replace('origin/release/v0.0.', '').trim()))
   );
 
+  if (!Number.isInteger(num)) num = 0;
+
   const newV = `release/v0.0.${num + 1}`;
 
   return [
     'git add lib-version.json',
     'git commit -m "update lib-version"',
     'git push origin',
-    `git checkout -b ${newV} origin/release/v0.0.${num}`,
+    `git checkout -b ${newV} ${num ? `origin/release/v0.0.${num}` : 'master'}`,
     'git merge --no-ff staging',
     `git push origin ${newV}`,
     'git checkout master',
