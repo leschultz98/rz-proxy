@@ -7,7 +7,7 @@ const PROJECTS = [
   // 'jugan',
   // 'lanceheadte',
   // 'reagan',
-  // 'lilymini',
+  // 'lilymini_mw',
   // 'pipert2refresh',
   // 'port_ui\\projects\\reagan',
 ];
@@ -25,7 +25,6 @@ const SCRIPTS = [
 ];
 
 for (const project of PROJECTS) {
-  const cd = `cd D:\\Workspaces\\${project}`;
-
-  execSync([cd, SCRIPTS].flat().join(' && '), { stdio: 'inherit' });
+  const cwd = `D:\\Workspaces\\${project}`;
+  execSync(SCRIPTS.join(' && '), { stdio: 'inherit', cwd });
 }

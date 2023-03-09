@@ -28,20 +28,18 @@ const mwRegex = /(?<=git\+ssh:\/\/git@bitbucket\.org\/razersw\/rz-middleware(-au
 const utilRegex = /(?<=git\+ssh:\/\/git@bitbucket\.org\/razersw\/razer-anne-utilities\.git#)\w+/g;
 const utilVerRegex = /(?<=razer-anne-utilities.+\s+"version":\s"0\.0\.)(\d+)/g;
 
-const mw = '28b7ddb35756cca593faf2ac420c5f12f90da0f5';
+const mw = '21b951bf00b69c8c7b17a7c095b833e9ce4bed8d';
 const util = 'a8def8bb2f35a62e0e1a89efea129538b8c1155a';
 const utilVer = '61';
 
 for (const project of PROJECTS) {
-  const pwd = `D:\\Workspaces\\${project}_mw`;
-  const cd = `cd ${pwd}`;
+  const cwd = `D:\\Workspaces\\${project}_mw`;
+  execSync(BEFORE.join(' && '), { stdio: 'inherit', cwd });
 
-  execSync([cd, BEFORE].flat().join(' && '), { stdio: 'inherit' });
-
-  const path = `${pwd}\\package-lock.json`;
+  const path = `${cwd}\\package-lock.json`;
   const content = readFileSync(path, 'utf8');
   const newContent = content.replace(mwRegex, mw).replace(utilRegex, util).replace(utilVerRegex, utilVer);
   writeFileSync(path, newContent);
 
-  execSync([cd, AFTER].flat().join(' && '), { stdio: 'inherit' });
+  execSync(AFTER.join(' && '), { stdio: 'inherit', cwd });
 }
