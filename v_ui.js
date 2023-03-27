@@ -3,13 +3,13 @@ const { readFileSync, writeFileSync } = require('fs');
 
 const PROJECTS = [
   //
-  // 'port_ui\\projects\\alma',
-  // 'port_ui\\projects\\evelyn',
-  // 'port_ui\\projects\\jugan',
-  // 'port_ui\\projects\\lanceheadte',
-  // 'port_ui\\projects\\reagan',
-  // 'lilymini',
-  // 'pipert2refresh',
+  'port_ui\\projects\\alma',
+  'port_ui\\projects\\evelyn',
+  'port_ui\\projects\\jugan',
+  'port_ui\\projects\\lanceheadte',
+  'port_ui\\projects\\reagan',
+  'lilymini',
+  'pipert2refresh',
   // 'C:\\Users\\phuc.le\\WebstormProjects\\audio-visualizer',
 ];
 
@@ -35,9 +35,9 @@ const getAfterScripts = (cwd) => {
   const newV = `release/v0.0.${num + 1}`;
 
   return [
-    'git add lib-version.json',
-    'git commit -m "update lib-version"',
-    'git push origin',
+    // 'git add lib-version.json',
+    // 'git commit -m "chore: update lib-version"',
+    // 'git push origin',
     `git checkout -b ${newV} ${num ? `origin/release/v0.0.${num}` : 'master'}`,
     'git merge --no-ff staging',
     `git push origin ${newV}`,
@@ -54,18 +54,18 @@ const commonRegex = /(?<=staging.+\s+"commit":\s")\w+/;
 const jstestRegex = /(?<=dev.+\s+"commit":\s")\w+/;
 const timeRegex = /(?<="time":\s)\d+/g;
 
-const common = '717646999a2d3d18cb17535281c99e183bf99284';
-const jstest = '7c7613356bedf69f35796e75cffb0f0642fcce35';
+const common = '947d78021b71b357407a9b6f1b6e4bc3621870ca';
+const jstest = '699ac6dfad5992dad3e0556850b9c303b293f767';
 const time = Date.now();
 
 for (const name of PROJECTS) {
   const cwd = getPath(name);
   execSync(BEFORE.join(' && '), { stdio: 'inherit', cwd });
 
-  const path = `${cwd}\\lib-version.json`;
-  const content = readFileSync(path, 'utf8');
-  const newContent = content.replace(commonRegex, common).replace(jstestRegex, jstest).replace(timeRegex, time);
-  writeFileSync(path, newContent);
+  // const path = `${cwd}\\lib-version.json`;
+  // const content = readFileSync(path, 'utf8');
+  // const newContent = content.replace(commonRegex, common).replace(jstestRegex, jstest).replace(timeRegex, time);
+  // writeFileSync(path, newContent);
 
   const after = getAfterScripts(cwd);
   execSync(after.join(' && '), { stdio: 'inherit', cwd });
