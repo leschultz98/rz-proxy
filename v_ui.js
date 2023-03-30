@@ -52,20 +52,25 @@ const getAfterScripts = (cwd) => {
 
 const commonRegex = /(?<=staging.+\s+"commit":\s")\w+/;
 const jstestRegex = /(?<=dev.+\s+"commit":\s")\w+/;
-const timeRegex = /(?<="time":\s)\d+/g;
+// const timeRegex = /(?<="time":\s)\d+/g;
 
-const common = '947d78021b71b357407a9b6f1b6e4bc3621870ca';
-const jstest = '699ac6dfad5992dad3e0556850b9c303b293f767';
-const time = Date.now();
+const common = '';
+const jstest = '';
+// const time = Date.now();
 
 for (const name of PROJECTS) {
   const cwd = getPath(name);
   execSync(BEFORE.join(' && '), { stdio: 'inherit', cwd });
 
   // const path = `${cwd}\\lib-version.json`;
-  // const content = readFileSync(path, 'utf8');
-  // const newContent = content.replace(commonRegex, common).replace(jstestRegex, jstest).replace(timeRegex, time);
-  // writeFileSync(path, newContent);
+  // let content = readFileSync(path, 'utf8');
+  // if (common) {
+  //   content = content.replace(commonRegex, common);
+  // }
+  // if (jstest) {
+  //   content = content.replace(jstestRegex, jstest);
+  // }
+  // writeFileSync(path, content);
 
   const after = getAfterScripts(cwd);
   execSync(after.join(' && '), { stdio: 'inherit', cwd });
