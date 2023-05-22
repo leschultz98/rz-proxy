@@ -19,7 +19,7 @@ const SCRIPTS = [
   'git push origin',
   'git checkout master',
   'git pull',
-  'git commit --allow-empty -m "trigger build"',
+  'git commit --allow-empty --no-verify -m "trigger build"',
   'git push origin master',
   'git checkout staging',
 ];

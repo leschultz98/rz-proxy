@@ -16,7 +16,7 @@ const PROJECTS = [
 const BEFORE = ['git checkout staging', 'git pull'];
 const AFTER = [
   // 'git add package-lock.json',
-  // 'git commit -m "chore: update package-lock"',
+  // 'git commit --no-verify -m "chore: update package-lock"',
   // 'git push origin',
   'git checkout master',
   'git pull',

@@ -36,7 +36,7 @@ const getAfterScripts = (cwd) => {
 
   return [
     // 'git add lib-version.json',
-    // 'git commit -m "chore: update lib-version"',
+    // 'git commit --no-verify -m "chore: update lib-version"',
     // 'git push origin',
     `git checkout -b ${newV} ${num ? `origin/release/v0.0.${num}` : 'master'}`,
     'git merge --no-ff staging',
