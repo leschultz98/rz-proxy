@@ -1,5 +1,5 @@
 const { execSync } = require('child_process');
-const { readFileSync, writeFileSync } = require('fs');
+const { readFileSync, writeFileSync, existsSync } = require('fs');
 
 const PROJECTS = [
   //
@@ -60,6 +60,11 @@ const jstest = '';
 
 for (const name of PROJECTS) {
   const cwd = getPath(name);
+
+  if (!existsSync(cwd)) {
+    execSync(`git clone git@bitbucket.org:razersw/${name}.git`, { stdio: 'inherit', cwd: 'D:\\Workspaces' });
+  }
+
   execSync(BEFORE.join(' && '), { stdio: 'inherit', cwd });
 
   // const path = `${cwd}\\lib-version.json`;

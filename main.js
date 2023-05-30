@@ -1,6 +1,6 @@
 const MW_PID = 0;
 const URLS = [
-  { url: '/test', paths: ['.'] },
+  { url: '/test', paths: ['.', 'test'] },
   { url: '/installer', paths: ['..', 'installer-ts', 'build'] },
   { url: '/background-manager', paths: ['..', 'appengine-background-manager', 'build'] },
 
