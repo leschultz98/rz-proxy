@@ -22,23 +22,32 @@ const getPath = (name) => {
 
 const getAfterScripts = (cwd) => {
   const output = execSync('git branch -r', { cwd });
-  let num = Math.max(
-    ...output
-      .toString()
-      .split('\n')
-      .filter((v) => v.includes('origin/release/v0.0.'))
-      .map((v) => parseInt(v.replace('origin/release/v0.0.', '').trim()))
-  );
 
-  if (!Number.isInteger(num)) num = 0;
+  const branches = output
+    .toString()
+    .split('\n')
+    .filter((v) => v.includes('origin/release/v0.0.'))
+    .map((v) => v.trim());
 
-  const newV = `release/v0.0.${num + 1}`;
+  let latestBranch;
+  let latestVer = 0;
+
+  for (const branch of branches) {
+    const ver = parseInt(branch.replace('origin/release/v0.0.', ''));
+
+    if (ver > latestVer) {
+      latestVer = ver;
+      latestBranch = branch;
+    }
+  }
+
+  const newV = `release/v0.0.${latestVer + 1}`;
 
   return [
     // 'git add lib-version.json',
     // 'git commit --no-verify -m "chore: update lib-version"',
     // 'git push origin',
-    `git checkout -b ${newV} ${num ? `origin/release/v0.0.${num}` : 'master'}`,
+    `git checkout -b ${newV} ${latestVer ? latestBranch : 'master'}`,
     'git merge --no-ff staging',
     `git push origin ${newV}`,
     'git checkout master',
