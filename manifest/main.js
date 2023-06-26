@@ -14,12 +14,12 @@ const script2 = [
   //
   'git add .',
   'git commit --no-verify -m "feat: update manifest (ANN-16890)"',
-  // 'git push origin',
+  'git push origin',
 ].join(' && ');
 
 [
   //
-  { mw: 'evelyn_mw', ui: 'port_ui\\projects\\evelyn' },
+  { mw: 'jugan_mw', ui: 'port_ui\\projects\\jugan' },
 ].forEach(async ({ mw, ui, data }) => {
   const cwd = `D:\\Workspaces\\${mw}`;
   execSync(script1, { stdio: 'inherit', cwd });
