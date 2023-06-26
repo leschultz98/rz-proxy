@@ -1,5 +1,6 @@
 {
   "name": "proxy",
+  "type": "module",
   "version": "1.0.0",
   "scripts": {
     "start": "nodemon main.js --watch main.js"
