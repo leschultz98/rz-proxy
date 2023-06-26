@@ -5,6 +5,6 @@ export const WORKSPACES = 'D:\\Workspaces';
 
 export const checkExists = (project) => {
   if (!existsSync(`${WORKSPACES}\\${project}`)) {
-    execSync(`git clone git@bitbucket.org:razersw/${project}.git`, { stdio: 'inherit', cwd: WORKSPACES });
+    execSync(`git clone git@bitbucket.org:razersw/${project}.git -b staging`, { stdio: 'inherit', cwd: WORKSPACES });
   }
 };
