@@ -49,21 +49,6 @@ URLS.forEach(({ url, paths, port, pathRewrite, onlyLocalHost }) => {
   );
 });
 
-const ASSETS_HOST = [
-  { prefix: '/amazon', target: 'https://razer-apps-assets.s3.amazonaws.com' },
-  { prefix: '/razer', target: 'https://app-assets.razer.com' },
-];
-ASSETS_HOST.forEach(({ prefix, target }) =>
-  app.use(
-    `${prefix}/files/synapse`,
-    createProxyMiddleware({
-      target,
-      changeOrigin: true,
-      pathRewrite: { [prefix]: '' },
-    })
-  )
-);
-
 const FILES = [
   // { path: '/synapse/dashboard/AvailableDevices.json', name: 'dump.json' },
 ];
@@ -75,6 +60,14 @@ FILES.forEach(({ path, name }) =>
       pathRewrite: { [path]: name },
     })
   )
+);
+
+app.use(
+  '/files/synapse',
+  createProxyMiddleware({
+    target: 'https://app-assets.razer.com',
+    changeOrigin: true,
+  })
 );
 
 app.use('*', createProxyMiddleware({ target: HOST, changeOrigin: true }));
