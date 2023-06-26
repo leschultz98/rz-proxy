@@ -1,5 +1,6 @@
 import crypto from 'crypto';
 import { mkdirSync, writeFileSync } from 'fs';
+import { checkExists } from '../utils/index.js';
 
 const serialize = (_json) => {
   if (_json === null || typeof _json !== 'object' || _json.toJSON != null) {
@@ -59,6 +60,7 @@ const hashJSON = async (obj) => {
 const versionRegex = /(?<=v)((\d+\.){3}\d+)(?=\.\w+$)/;
 
 export default async function (path, { name, releaseNotesURL = '', description, resources }) {
+  checkExists(path);
   const publicPath = `D:\\Workspaces\\${path}\\public\\`;
   const installerManifest = {
     name,
