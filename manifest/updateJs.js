@@ -20,7 +20,7 @@ const updateHusky = (path) => {
   }
 };
 
-const regex = /(?<=middlewareInjector.useFeature\('rzDeviceType.+)(\n)/;
+const regex = /(?<=middlewareInjector.useFeature\('rzDeviceType(.||\n)+\).+)(\n)/;
 
 export default function (path) {
   updateHusky(path);
