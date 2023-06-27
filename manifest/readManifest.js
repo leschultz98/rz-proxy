@@ -1,9 +1,12 @@
 import { readFileSync } from 'fs';
 import { checkExists } from '../utils/index.js';
 
+const prefix = 'NormalDriver_';
+
 const getPrefix = (url) => {
-  if (url.toLowerCase().includes('.dll')) return '';
-  return 'NormalDriver_';
+  const string = url.toLowerCase();
+  if (string.includes('.dll') || string.includes(prefix)) return '';
+  return prefix;
 };
 
 export default function (path) {
