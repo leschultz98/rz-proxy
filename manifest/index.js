@@ -27,5 +27,5 @@ const script = [
   name: 'string',
   releaseNotesURL: 'string',
   description: {},
-  resources: [{ resourceName: 'string', url: 'string' }],
+  resources: [{ resourceName: 'string', url: 'string', path?, filePath? }],
 }; */

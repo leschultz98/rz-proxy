@@ -19,9 +19,20 @@ export default function (path) {
     name: installerManifest.name,
     releaseNotesURL: installerManifest.latest.releaseNotesURL,
     description: installerManifest.description,
-    resources: manifest.resources.map(({ resourceName, url }) => ({
-      resourceName: getPrefix(url) + resourceName,
-      url,
-    })),
+    resources: manifest.resources.map(
+      ({
+        resourceName,
+        url,
+        path,
+        action: {
+          saveToDisk: { filePath },
+        },
+      }) => ({
+        resourceName: getPrefix(url) + resourceName,
+        url,
+        path,
+        filePath,
+      })
+    ),
   };
 }

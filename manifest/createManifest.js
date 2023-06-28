@@ -82,14 +82,14 @@ export default async function (path, { name, releaseNotesURL = '', description, 
 
   const manifest = { resources: [] };
 
-  for (const { resourceName, url } of resources) {
+  for (const { resourceName, url, path, filePath } of resources) {
     const res = await fetch(url);
 
-    manifest.resources.push({
+    const data = {
       resourceName,
       resourceVersion: url.match(versionRegex)[0],
       url,
-      path: name,
+      path: path || name,
       overwriteApp: '',
       type: res.headers.get('Content-Type'),
       size: parseInt(res.headers.get('Content-Length')),
@@ -98,11 +98,16 @@ export default async function (path, { name, releaseNotesURL = '', description, 
       restartRequired: false,
       action: {
         saveToDisk: {
-          filePath: 'Drivers',
-          runOnInstall: '/S /LAUNCH',
+          filePath: filePath || 'Drivers',
         },
       },
-    });
+    };
+
+    if (url.includes('.exe')) {
+      data.action.saveToDisk.runOnInstall = '/S /LAUNCH';
+    }
+
+    manifest.resources.push(data);
   }
 
   await hashJSON(manifest);
