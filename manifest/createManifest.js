@@ -115,3 +115,9 @@ export default async function (path, { name, releaseNotesURL = '', description, 
   mkdirSync(publicPath + 'manifests', { recursive: true });
   writeFileSync(publicPath + 'manifests\\manifest-1.0.0.json', JSON.stringify(manifest, null, 2) + '\n');
 }
+
+const data = {};
+
+(async () => {
+  console.log(await hash(Buffer.from(serialize(data), 'utf-8')));
+})();
