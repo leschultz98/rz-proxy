@@ -52,7 +52,7 @@ const hash = async (buffer, hex) => {
   return result;
 };
 
-const hashJSON = async (obj) => {
+export const hashJSON = async (obj) => {
   const buffer = Buffer.from(serialize(obj), 'utf-8');
   obj.jws = await hash(buffer);
 };
