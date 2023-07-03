@@ -1,6 +1,6 @@
 import { execSync } from 'child_process';
 
-import createManifest from './createManifest.js';
+import createManifest, { hash, serialize, fetchResource } from './createManifest.js';
 import readManifest from './readManifest.js';
 import updateJs from './updateJs.js';
 
@@ -29,3 +29,15 @@ const script = [
   description: {},
   resources: [{ resourceName: 'string', url: 'string', path?, filePath? }],
 }; */
+
+const object = {};
+(async () => {
+  delete object.jws;
+  console.log('hash object', await hash(Buffer.from(serialize(object), 'utf-8')));
+})();
+
+const resource = '';
+
+(async () => {
+  resource && console.log('hash resource', await fetchResource(resource));
+})();

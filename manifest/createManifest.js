@@ -2,7 +2,7 @@ import crypto from 'crypto';
 import { mkdirSync, writeFileSync } from 'fs';
 import { checkExists } from '../utils/index.js';
 
-const serialize = (_json) => {
+export const serialize = (_json) => {
   if (_json === null || typeof _json !== 'object' || _json.toJSON != null) {
     return JSON.stringify(_json);
   }
@@ -34,7 +34,7 @@ const serialize = (_json) => {
   );
 };
 
-const hash = async (buffer, hex) => {
+export const hash = async (buffer, hex) => {
   const result = {};
   const hashBuffer = await crypto.subtle.digest('SHA-256', buffer);
   const uint8Array = new Uint8Array(hashBuffer);
@@ -55,6 +55,15 @@ const hash = async (buffer, hex) => {
 export const hashJSON = async (obj) => {
   const buffer = Buffer.from(serialize(obj), 'utf-8');
   obj.jws = await hash(buffer);
+};
+
+export const fetchResource = async (url) => {
+  const res = await fetch(url);
+  return {
+    type: res.headers.get('Content-Type'),
+    size: parseInt(res.headers.get('Content-Length')),
+    ...(await hash(await res.arrayBuffer(), true)),
+  };
 };
 
 const versionRegex = /(?<=v)((\d+\.){3}\d+)(?=\.\w+$)/;
@@ -83,17 +92,13 @@ export default async function (path, { name, releaseNotesURL = '', description, 
   const manifest = { resources: [] };
 
   for (const { resourceName, url, path, filePath } of resources) {
-    const res = await fetch(url);
-
     const data = {
       resourceName,
       resourceVersion: url.match(versionRegex)[0],
       url,
       path: path || name,
       overwriteApp: '',
-      type: res.headers.get('Content-Type'),
-      size: parseInt(res.headers.get('Content-Length')),
-      ...(await hash(await res.arrayBuffer(), true)),
+      ...fetchResource(url),
       noCache: false,
       restartRequired: false,
       action: {
@@ -115,9 +120,3 @@ export default async function (path, { name, releaseNotesURL = '', description, 
   mkdirSync(publicPath + 'manifests', { recursive: true });
   writeFileSync(publicPath + 'manifests\\manifest-1.0.0.json', JSON.stringify(manifest, null, 2) + '\n');
 }
-
-const data = {};
-
-(async () => {
-  console.log(await hash(Buffer.from(serialize(data), 'utf-8')));
-})();
