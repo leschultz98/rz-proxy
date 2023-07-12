@@ -37,15 +37,15 @@ for (const project of PROJECTS) {
   const cwd = `D:\\Workspaces\\${project}_mw`;
   execSync(BEFORE.join(' && '), { stdio: 'inherit', cwd });
 
-  // const path = `${cwd}\\package-lock.json`;
-  // let content = readFileSync(path, 'utf8');
-  // if (mw) {
-  //   content = content.replace(mwRegex, mw);
-  // }
-  // if (util) {
-  //   content = content.replace(utilRegex, util).replace(utilVerRegex, utilVer);
-  // }
-  // writeFileSync(path, content);
+  const path = `${cwd}\\package-lock.json`;
+  let content = readFileSync(path, 'utf8');
+  if (mw) {
+    content = content.replace(mwRegex, mw);
+  }
+  if (util) {
+    content = content.replace(utilRegex, util).replace(utilVerRegex, utilVer);
+  }
+  writeFileSync(path, content);
 
   execSync(AFTER.join(' && '), { stdio: 'inherit', cwd });
 }

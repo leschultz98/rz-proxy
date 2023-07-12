@@ -19,6 +19,7 @@ const URLS = [
   // { url: '/systray/systrayv2', port: 3007 },
   // { url: '/remote-sync-worker', port: 5555, onlyLocalHost: true },
   // { url: '/synapse/products/99/ui', port: 3000 },
+  // { url: '/synapse/products/769/ui', port: 3000 },
   { url: `/synapse/products/${MW_PID}/mw`, port: 1000 + MW_PID, pathRewrite: true },
 
   // { url: '/chroma-app/dashboard', port: 3001 },
@@ -63,7 +64,7 @@ FILES.forEach(({ path, name }) =>
 );
 
 app.use(
-  '/files/synapse',
+  '/files',
   createProxyMiddleware({
     target: 'https://app-assets.razer.com',
     changeOrigin: true,

@@ -47,7 +47,7 @@ const getAfterScripts = (cwd) => {
     // 'git add lib-version.json',
     // 'git commit --no-verify -m "chore: update lib-version"',
     // 'git push origin',
-    `git checkout -b ${newV} ${latestVer ? latestBranch : 'master'}`,
+    `git checkout -b ${newV} ${latestVer ? latestBranch : 'origin/master'}`,
     'git merge --no-ff staging',
     `git push origin ${newV}`,
     'git checkout master',
@@ -76,15 +76,15 @@ for (const name of PROJECTS) {
 
   execSync(BEFORE.join(' && '), { stdio: 'inherit', cwd });
 
-  // const path = `${cwd}\\lib-version.json`;
-  // let content = readFileSync(path, 'utf8');
-  // if (common) {
-  //   content = content.replace(commonRegex, common);
-  // }
-  // if (jstest) {
-  //   content = content.replace(jstestRegex, jstest);
-  // }
-  // writeFileSync(path, content);
+  const path = `${cwd}\\lib-version.json`;
+  let content = readFileSync(path, 'utf8');
+  if (common) {
+    content = content.replace(commonRegex, common);
+  }
+  if (jstest) {
+    content = content.replace(jstestRegex, jstest);
+  }
+  writeFileSync(path, content);
 
   const after = getAfterScripts(cwd);
   execSync(after.join(' && '), { stdio: 'inherit', cwd });

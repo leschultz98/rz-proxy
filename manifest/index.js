@@ -39,5 +39,5 @@ const object = {};
 const resource = '';
 
 (async () => {
-  resource && console.log('hash resource', await fetchResource(resource));
+  resource && console.log('hash resource', await fetchResource('https://app-assets.razer.com/' + resource));
 })();
