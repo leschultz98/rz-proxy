@@ -64,10 +64,11 @@ FILES.forEach(({ path, name }) =>
 );
 
 app.use(
-  '/files',
+  '/assets',
   createProxyMiddleware({
     target: 'https://app-assets.razer.com',
     changeOrigin: true,
+    pathRewrite: { '/assets': '' },
   })
 );
 
