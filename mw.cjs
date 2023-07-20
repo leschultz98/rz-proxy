@@ -3,26 +3,27 @@ const { readFileSync, writeFileSync } = require('fs');
 
 const PROJECTS = [
   //
-  'alma',
-  'evelyn',
-  'jugan',
-  'lanceheadte',
-  'reagan',
-  'lilymini',
-  'pipert2refresh',
+  // 'alma',
+  // 'evelyn',
+  // 'jugan',
+  // 'lanceheadte',
+  // 'reagan',
+  // 'lilymini',
+  // 'pipert2refresh',
   // 'kittybt',
+  'mabelt1',
 ];
 
 const BEFORE = ['git checkout staging', 'git pull'];
 const AFTER = [
-  // 'git add package-lock.json',
-  // 'git commit --no-verify -m "chore: update package-lock"',
-  // 'git push origin',
-  'git checkout master',
-  'git pull',
-  'git merge --no-ff staging',
-  'git push origin master',
-  'git checkout staging',
+  'git add package-lock.json',
+  'git commit --no-verify -m "chore: update package-lock"',
+  'git push origin',
+  // 'git checkout master',
+  // 'git pull',
+  // 'git merge --no-ff staging',
+  // 'git push origin master',
+  // 'git checkout staging',
 ];
 
 const mwRegex = /(?<=git\+ssh:\/\/git@bitbucket\.org\/razersw\/rz-middleware(-audio)?\.git#)\w+/g;

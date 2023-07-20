@@ -98,7 +98,7 @@ export default async function (path, { name, releaseNotesURL = '', description, 
       url,
       path: path || name,
       overwriteApp: '',
-      ...fetchResource(url),
+      ...(await fetchResource(url)),
       noCache: false,
       restartRequired: false,
       action: {
