@@ -33,7 +33,7 @@ const script = [
 const object = {};
 (async () => {
   delete object.jws;
-  console.log('hash object', await hash(Buffer.from(serialize(object), 'utf-8')));
+  Object.keys(object).length && console.log('hash object', await hash(Buffer.from(serialize(object), 'utf-8')));
 })();
 
 const resource = '';

@@ -1,12 +1,11 @@
 import { readFileSync } from 'fs';
 import { checkExists } from '../utils/index.js';
 
-const prefix = 'NormalDriver_';
-
-const getPrefix = (url) => {
-  const string = url.toLowerCase();
-  if (string.includes('.dll') || string.includes(prefix)) return '';
-  return prefix;
+const getResourceName = ({ resourceName, url }) => {
+  if (url.includes('.exe')) {
+    return 'NormalDriver_' + url.split('/').pop().split('_')[0];
+  }
+  return resourceName;
 };
 
 export default function (path) {
@@ -28,7 +27,7 @@ export default function (path) {
           saveToDisk: { filePath },
         },
       }) => ({
-        resourceName: getPrefix(url) + resourceName,
+        resourceName: getResourceName({ resourceName, url }),
         url,
         path,
         filePath,
