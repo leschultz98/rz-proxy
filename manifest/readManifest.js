@@ -21,6 +21,7 @@ export default function (path) {
     resources: manifest.resources.map(
       ({
         resourceName,
+        resourceVersion,
         url,
         path,
         action: {
@@ -28,6 +29,7 @@ export default function (path) {
         },
       }) => ({
         resourceName: getResourceName({ resourceName, url }),
+        resourceVersion,
         url,
         path,
         filePath,

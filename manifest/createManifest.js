@@ -91,10 +91,10 @@ export default async function (path, { name, releaseNotesURL = '', description, 
 
   const manifest = { resources: [] };
 
-  for (const { resourceName, url, path, filePath } of resources) {
+  for (const { resourceName, resourceVersion, url, path, filePath } of resources) {
     const data = {
       resourceName,
-      resourceVersion: url.match(versionRegex)[0],
+      resourceVersion: url.match(versionRegex)?.[0] || resourceVersion,
       url,
       path: path || name,
       overwriteApp: '',
