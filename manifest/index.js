@@ -6,7 +6,7 @@ import updateJs from './updateJs.js';
 
 const script = [
   //
-  'git add .',
+  `git add . ":!.idea"`,
   'git commit --no-verify -m "feat: update manifest (ANN-16890)"',
   'git push origin',
 ].join(' && ');
@@ -15,11 +15,15 @@ const script = [
   // { name: 'avat1refresh', ui: 'port_ui\\projects\\' },
   // { name: 'pipert1' },
 ].forEach(async ({ name, ui, data }) => {
+  name = name.toLowerCase();
   const mw = name + '_mw';
   const cwd = `D:\\Workspaces\\${mw}`;
   await createManifest(mw, data || readManifest((ui || '') + name));
   updateJs(mw);
   execSync(script, { stdio: 'inherit', cwd });
+
+  const commit = execSync('git rev-parse HEAD', { cwd }).toString().trim();
+  execSync(`start https://bitbucket.org/razersw/${mw}/commits/${commit}`);
 });
 
 // data sample
