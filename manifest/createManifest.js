@@ -103,7 +103,7 @@ export default async function (path, { name, releaseNotesURL = '', description, 
       restartRequired: false,
       action: {
         saveToDisk: {
-          filePath: filePath || 'Drivers',
+          filePath: filePath || '',
         },
       },
     };
