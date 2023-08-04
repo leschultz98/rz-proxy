@@ -29,6 +29,6 @@ export default function (path) {
   let content = readFileSync(filePath, 'utf8');
   if (!content.includes('useMWManifest')) {
     content = content.replace(regex, "\nmiddlewareInjector.useFeature('useMWManifest', 'yes');\n");
-  }
+  } else return true;
   writeFileSync(filePath, content);
 }

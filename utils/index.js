@@ -6,11 +6,11 @@ export const WORKSPACES = 'D:\\Workspaces';
 export const getProjectPath = (project) => `${WORKSPACES}\\${project}`;
 
 export const checkExists = (project) => {
-  const cmd = getProjectPath(project);
-  if (existsSync(cmd)) {
+  const cwd = getProjectPath(project);
+  if (existsSync(cwd)) {
     execSync('git checkout staging && git fetch origin && git reset --hard origin/staging', {
       stdio: 'inherit',
-      cmd,
+      cwd,
     });
   } else {
     execSync(`git clone git@bitbucket.org:razersw/${project}.git -b staging`, { stdio: 'inherit', cwd: WORKSPACES });

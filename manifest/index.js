@@ -19,7 +19,13 @@ const script = [
   const mw = name + '_mw';
   const cwd = `D:\\Workspaces\\${mw}`;
   await createManifest(mw, data || readManifest((ui || '') + name));
-  updateJs(mw);
+
+  const skip = updateJs(mw);
+  if (skip) {
+    console.log('---> SKIP', name);
+    return;
+  }
+
   execSync(script, { stdio: 'inherit', cwd });
 
   const commit = execSync('git rev-parse HEAD', { cwd }).toString().trim();
