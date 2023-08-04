@@ -1,8 +1,8 @@
 import { execSync } from 'child_process';
-
-import createManifest, { hash, serialize, fetchResource } from './createManifest.js';
+import createManifest from './createManifest.js';
 import readManifest from './readManifest.js';
 import updateJs from './updateJs.js';
+import { fetchResource, hash, serialize } from './utils.js';
 
 const script = [
   //

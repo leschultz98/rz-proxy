@@ -1,72 +1,6 @@
-import crypto from 'crypto';
-import { mkdirSync, writeFileSync } from 'fs';
-import { checkExists } from '../utils/index.js';
-
-export const serialize = (_json) => {
-  if (_json === null || typeof _json !== 'object' || _json.toJSON != null) {
-    return JSON.stringify(_json);
-  }
-
-  if (Array.isArray(_json)) {
-    return (
-      '[' +
-      _json.reduce((t, cv, ci) => {
-        const comma = ci === 0 ? '' : ',';
-        const value = cv === undefined || typeof cv === 'symbol' ? null : cv;
-        return t + comma + serialize(value);
-      }, '') +
-      ']'
-    );
-  }
-
-  return (
-    '{' +
-    Object.keys(_json)
-      .sort()
-      .reduce((t, cv) => {
-        if (_json[cv] === undefined || typeof _json[cv] === 'symbol') {
-          return t;
-        }
-        const comma = t.length === 0 ? '' : ',';
-        return t + comma + serialize(cv) + ':' + serialize(_json[cv]);
-      }, '') +
-    '}'
-  );
-};
-
-export const hash = async (buffer, hex) => {
-  const result = {};
-  const hashBuffer = await crypto.subtle.digest('SHA-256', buffer);
-  const uint8Array = new Uint8Array(hashBuffer);
-
-  if (hex) {
-    result.sha256 = Array.from(uint8Array)
-      .map((b) => b.toString(16).padStart(2, '0'))
-      .join('')
-      .toUpperCase();
-  }
-
-  const base64String = Buffer.from(uint8Array).toString('base64');
-  result.integrity = `sha256-${base64String}`;
-
-  return result;
-};
-
-export const hashJSON = async (obj) => {
-  const buffer = Buffer.from(serialize(obj), 'utf-8');
-  obj.jws = await hash(buffer);
-};
-
-export const fetchResource = async (url) => {
-  const res = await fetch(url);
-  return {
-    type: res.headers.get('Content-Type'),
-    size: parseInt(res.headers.get('Content-Length')),
-    ...(await hash(await res.arrayBuffer(), true)),
-  };
-};
-
-const versionRegex = /(?<=v)((\d+\.){3}\d+)(?=\.\w+$)/;
+import { mkdirSync } from 'fs';
+import { checkExists, writeJSON } from '../utils/index.js';
+import { fetchResource, hashJSON, parseVersion } from './utils.js';
 
 export default async function (path, { name, releaseNotesURL = '', description, resources }) {
   checkExists(path);
@@ -87,14 +21,14 @@ export default async function (path, { name, releaseNotesURL = '', description, 
 
   await hashJSON(installerManifest);
 
-  writeFileSync(publicPath + 'installer-manifest.json', JSON.stringify(installerManifest, null, 2) + '\n');
+  writeJSON(publicPath + 'installer-manifest.json', installerManifest);
 
   const manifest = { resources: [] };
 
   for (const { resourceName, resourceVersion, url, path, filePath } of resources) {
     const data = {
       resourceName,
-      resourceVersion: url.match(versionRegex)?.[0] || resourceVersion,
+      resourceVersion: parseVersion(url, resourceVersion),
       url,
       path: path || name,
       overwriteApp: '',
@@ -118,5 +52,5 @@ export default async function (path, { name, releaseNotesURL = '', description, 
   await hashJSON(manifest);
 
   mkdirSync(publicPath + 'manifests', { recursive: true });
-  writeFileSync(publicPath + 'manifests\\manifest-1.0.0.json', JSON.stringify(manifest, null, 2) + '\n');
+  writeJSON(publicPath + 'manifests\\manifest-1.0.0.json', manifest);
 }
