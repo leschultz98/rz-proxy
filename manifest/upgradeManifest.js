@@ -2,8 +2,12 @@ import { readFileSync } from 'fs';
 import { WORKSPACES, writeJSON } from '../utils/index.js';
 import { commit, fetchResource, hashJSON, parseVersion } from './utils.js';
 
-const project = 'mabelt1';
-const version = '1.0.5';
+const project = process.argv[2];
+const version = process.argv[3];
+
+if (!project || !version) {
+  throw new Error('invalid argument');
+}
 
 const manifestFile = `manifest-${version}.json`;
 const publicPath = `${WORKSPACES}\\${project}\\public`;
