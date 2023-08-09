@@ -17,7 +17,10 @@ const manifestPath = `${publicPath}\\manifests\\${manifestFile}`;
 const installerManifest = JSON.parse(readFileSync(installerPath));
 const manifest = JSON.parse(readFileSync(manifestPath));
 
-installerManifest.archive.push({ ...installerManifest.latest });
+if (installerManifest.latest.version) {
+  installerManifest.archive.push({ ...installerManifest.latest });
+}
+
 installerManifest.latest.version = version;
 installerManifest.latest.url = manifestFile;
 installerManifest.latest.releaseDate = Date.now();
