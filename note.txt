@@ -24,8 +24,6 @@ Low Risk
 
 ***
 
-- Pushed 7 devices to pre-prod
-
 Hi Sin Ming, I would like to report:
 Last working day:
 - Fixed 

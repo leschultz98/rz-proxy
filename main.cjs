@@ -1,29 +1,19 @@
 const MW_PID = 0;
 const URLS = [
   { url: '/test', paths: ['.', 'test'] },
+  // { url: '/jstestrzdevice', paths: ['..', 'jstestrzdevice\\build'] },
   { url: '/installer', paths: ['..', 'installer-ts', 'build'] },
   { url: '/background-manager', paths: ['..', 'appengine-background-manager', 'build'] },
   { url: '/synapse/lighting-engine/manifest', paths: ['..', 'razer-lighting-engine\\public\\manifest'] },
 
-  // { url: '/synapse/dashboard', paths: ['..', 'dashboard', 'build'] },
-  // { url: '/chroma-app/dashboard', paths: ['..', 'razer-chroma-app', 'build'] },
-  // { url: '/synapse/products/154/ui', paths: ['..', 'port_ui', 'build'] },
-  // { url: '/synapse/products/154/mw', paths: ['..', 'port_mw', 'build'] },
+  { url: `/synapse/products/${MW_PID}/mw`, port: 1000 + MW_PID, pathRewrite: true },
+  // { url: '/synapse/products/99/ui', port: 3000 },
 
-  // { url: '/synapse/philips-hue', port: 3000 },
   // { url: '/synapse/dashboard', port: 3008 },
-  // { url: '/synapse/settings', port: 3012 },
   // { url: '/synapse/profiles', port: 3005 },
   // { url: '/synapse/gms-proxy', port: 3010 },
-  // { url: '/synapse/macro', port: 3009 },
-  // { url: '/systray/systrayv2', port: 3007 },
   // { url: '/remote-sync-worker', port: 5555, onlyLocalHost: true },
-  // { url: '/synapse/products/99/ui', port: 3000 },
-  // { url: '/synapse/products/769/ui', port: 3000 },
-  { url: `/synapse/products/${MW_PID}/mw`, port: 1000 + MW_PID, pathRewrite: true },
-
   // { url: '/chroma-app/dashboard', port: 3001 },
-  // { url: '/chroma-app/settings', port: 3002 },
   // { url: '/synapse/chroma-studio', port: 3003 },
   // { url: '/synapse/chroma-connect', port: 3004 },
   // { url: '/synapse/audio-visualizer', port: 3009 },
@@ -61,15 +51,6 @@ FILES.forEach(({ path, name }) =>
       pathRewrite: { [path]: name },
     })
   )
-);
-
-app.use(
-  '/assets',
-  createProxyMiddleware({
-    target: 'https://app-assets.razer.com',
-    changeOrigin: true,
-    pathRewrite: { '/assets': '' },
-  })
 );
 
 app.use('*', createProxyMiddleware({ target: HOST, changeOrigin: true }));
