@@ -3,7 +3,10 @@
   "type": "module",
   "version": "1.0.0",
   "scripts": {
-    "start": "nodemon main.cjs --watch main.cjs"
+    "start": "nodemon src/main.cjs --watch src/main.cjs",
+    "trigger": "node src/trigger.cjs",
+    "ui": "node src/ui.cjs",
+    "mw": "node src/mw.cjs"
   },
   "dependencies": {
     "express": "^4.18.1",
